@@ -2,6 +2,7 @@ package io.hhplus.tdd.point;
 
 import io.hhplus.tdd.point.service.UserPointChargeService;
 import io.hhplus.tdd.point.service.UserPointFindService;
+import io.hhplus.tdd.point.service.UserPointSpendService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ public class PointController {
 
     private final UserPointFindService userPointFindService;
     private final UserPointChargeService userPointChargeService;
+    private final UserPointSpendService userPointSpendService;
 
     /**
      * TODO - 특정 유저의 포인트를 조회하는 기능을 작성해주세요.
@@ -51,12 +53,12 @@ public class PointController {
     /**
      * TODO - 특정 유저의 포인트를 사용하는 기능을 작성해주세요.
      */
-    @PatchMapping("{id}/use")
+    @PatchMapping("{userId}/use")
     public UserPoint use(
-            @PathVariable long id,
+            @PathVariable long userId,
             @RequestBody long amount
     ) {
-        return new UserPoint(0, 0, 0);
+        return userPointSpendService.spend(userId, amount);
     }
 
 }
