@@ -20,7 +20,7 @@ class UserPointChargeValidator implements UserPointValidator {
 
         long increasedPoint = userPoint.point() + amount;
         if (increasedPoint > MAX_POINT) {
-            throw new IllegalStateException("Too much point: %d".formatted(increasedPoint));
+            throw new IllegalStateException("Too many point: %d".formatted(increasedPoint));
         }
     }
 
