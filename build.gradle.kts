@@ -46,6 +46,11 @@ tasks.getByName("jar") {
     enabled = false
 }
 
+tasks.wrapper {
+    distributionType = Wrapper.DistributionType.BIN
+    version = "8.13"
+}
+
 // test tasks
 tasks.test {
     ignoreFailures = true
