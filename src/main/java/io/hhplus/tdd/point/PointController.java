@@ -1,5 +1,6 @@
 package io.hhplus.tdd.point;
 
+import io.hhplus.tdd.point.service.UserPointChargeService;
 import io.hhplus.tdd.point.service.UserPointFindService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import java.util.List;
 public class PointController {
 
     private final UserPointFindService userPointFindService;
+    private final UserPointChargeService userPointChargeService;
 
     /**
      * TODO - 특정 유저의 포인트를 조회하는 기능을 작성해주세요.
@@ -38,12 +40,12 @@ public class PointController {
     /**
      * TODO - 특정 유저의 포인트를 충전하는 기능을 작성해주세요.
      */
-    @PatchMapping("{id}/charge")
+    @PatchMapping("{userId}/charge")
     public UserPoint charge(
-            @PathVariable long id,
+            @PathVariable long userId,
             @RequestBody long amount
     ) {
-        return new UserPoint(0, 0, 0);
+        return userPointChargeService.charge(userId, amount);
     }
 
     /**
