@@ -1,4 +1,4 @@
-package io.hhplus.tdd.point.service;
+package io.hhplus.tdd.point.service.charge;
 
 import io.hhplus.tdd.database.UserPointTable;
 import io.hhplus.tdd.point.UserPoint;
@@ -13,10 +13,10 @@ import java.util.Random;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class SimpleUserPointSpendServiceIntegrationTest {
+class SimpleUserPointChargeServiceIntegrationTest {
 
     @Autowired
-    private SimpleUserPointSpendService sut;
+    private SimpleUserPointChargeService sut;
 
     @Autowired
     private UserPointTable userPointTable;
@@ -29,16 +29,14 @@ class SimpleUserPointSpendServiceIntegrationTest {
         long userId = new Random().nextLong(1L, Long.MAX_VALUE);
         long amount = 100L;
 
-        userPointTable.insertOrUpdate(userId, amount * threadCount);
-
         // when & then
-        ConcurrentExecutorUtils.execute(threadCount, () -> sut.spend(userId, amount));
+        ConcurrentExecutorUtils.execute(threadCount, () -> sut.charge(userId, amount));
 
         // then
         UserPoint selected = userPointTable.selectById(userId);
         assertThat(selected)
                 .isNotNull()
-                .matches(it -> it.point() != 0);
+                .matches(it -> it.point() != amount * threadCount);
     }
 
 }

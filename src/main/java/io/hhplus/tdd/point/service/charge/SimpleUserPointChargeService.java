@@ -1,4 +1,4 @@
-package io.hhplus.tdd.point.service;
+package io.hhplus.tdd.point.service.charge;
 
 import io.hhplus.tdd.database.PointHistoryTable;
 import io.hhplus.tdd.database.UserPointTable;
@@ -26,8 +26,8 @@ class SimpleUserPointChargeService implements UserPointChargeService {
 
         userPointValidator.validate(selected, amount);
 
-        long increasedPoint = selected.point() + amount;
-        UserPoint saved = userPointTable.insertOrUpdate(selected.id(), increasedPoint);
+        UserPoint increased = selected.increase(amount);
+        UserPoint saved = userPointTable.insertOrUpdate(selected.id(), increased.point());
 
         pointHistoryTable.insert(selected.id(), amount, TransactionType.CHARGE, System.currentTimeMillis());
 

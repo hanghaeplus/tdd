@@ -1,11 +1,12 @@
 package io.hhplus.tdd.point;
 
 import io.hhplus.tdd.point.service.PointHistoryService;
-import io.hhplus.tdd.point.service.UserPointChargeService;
 import io.hhplus.tdd.point.service.UserPointFindService;
-import io.hhplus.tdd.point.service.UserPointSpendService;
+import io.hhplus.tdd.point.service.charge.UserPointChargeService;
+import io.hhplus.tdd.point.service.spend.UserPointSpendService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 public class PointController {
 
     private final UserPointFindService userPointFindService;
+    @Qualifier("lockedUserPointChargeService")
     private final UserPointChargeService userPointChargeService;
     private final UserPointSpendService userPointSpendService;
     private final PointHistoryService pointHistoryService;

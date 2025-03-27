@@ -1,4 +1,4 @@
-package io.hhplus.tdd.point.service;
+package io.hhplus.tdd.point.service.spend;
 
 import io.hhplus.tdd.database.PointHistoryTable;
 import io.hhplus.tdd.database.UserPointTable;
@@ -26,8 +26,8 @@ class SimpleUserPointSpendService implements UserPointSpendService {
 
         userPointValidator.validate(selected, amount);
 
-        long decreasedPoint = selected.point() - amount;
-        UserPoint saved = userPointTable.insertOrUpdate(selected.id(), decreasedPoint);
+        UserPoint decreased = selected.decrease(amount);
+        UserPoint saved = userPointTable.insertOrUpdate(selected.id(), decreased.point());
 
         pointHistoryTable.insert(selected.id(), amount, TransactionType.USE, System.currentTimeMillis());
 

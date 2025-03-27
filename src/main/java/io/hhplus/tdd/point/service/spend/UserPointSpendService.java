@@ -1,4 +1,4 @@
-package io.hhplus.tdd.point.service;
+package io.hhplus.tdd.point.service.spend;
 
 import io.hhplus.tdd.point.UserPoint;
 

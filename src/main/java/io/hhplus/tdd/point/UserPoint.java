@@ -10,4 +10,12 @@ public record UserPoint(
         return new UserPoint(id, 0, System.currentTimeMillis());
     }
 
+    public UserPoint increase(long amount) {
+        return new UserPoint(id, point + amount, System.currentTimeMillis());
+    }
+
+    public UserPoint decrease(long amount) {
+        return new UserPoint(id, point - amount, System.currentTimeMillis());
+    }
+
 }
