@@ -32,7 +32,7 @@ class SimpleUserPointSpendServiceIntegrationTest {
         userPointTable.insertOrUpdate(userId, amount * threadCount);
 
         // when & then
-        ConcurrentExecutorUtils.execute(threadCount, () -> sut.spend(userId, amount));
+        ConcurrentExecutorUtils.execute(threadCount, i -> sut.spend(userId, amount));
 
         // then
         UserPoint selected = userPointTable.selectById(userId);

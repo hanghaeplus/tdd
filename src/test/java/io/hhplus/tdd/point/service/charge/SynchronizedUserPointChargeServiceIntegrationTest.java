@@ -36,7 +36,7 @@ class SynchronizedUserPointChargeServiceIntegrationTest {
         long amount = 100L;
 
         // when & then
-        ConcurrentExecutorUtils.execute(threadCount, () -> sut.charge(userId, amount));
+        ConcurrentExecutorUtils.execute(threadCount, i -> sut.charge(userId, amount));
 
         // then
         UserPoint selected = userPointTable.selectById(userId);
