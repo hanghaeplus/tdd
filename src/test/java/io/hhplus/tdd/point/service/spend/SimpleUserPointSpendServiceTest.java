@@ -2,6 +2,7 @@ package io.hhplus.tdd.point.service.spend;
 
 import io.hhplus.tdd.database.PointHistoryTable;
 import io.hhplus.tdd.database.UserPointTable;
+import io.hhplus.tdd.point.TransactionType;
 import io.hhplus.tdd.point.UserPoint;
 import io.hhplus.tdd.point.validator.UserPointValidator;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,8 +14,10 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @MockitoSettings
 class SimpleUserPointSpendServiceTest {
@@ -53,6 +56,14 @@ class SimpleUserPointSpendServiceTest {
         UserPoint spentUserPoint = sut.spend(userId, amount);
 
         // then
+        verify(userPointValidator, times(1))
+                .validate(any(UserPoint.class), eq(amount));
+        verify(userPointTable, times(1))
+                .selectById(userId);
+        verify(userPointTable, times(1))
+                .insertOrUpdate(userId, decreasedPoint);
+        verify(pointHistoryTable, times(1))
+                .insert(eq(userId), eq(amount), eq(TransactionType.USE), anyLong());
         assertThat(spentUserPoint)
                 .isNotNull()
                 .returns(userId, UserPoint::id)
