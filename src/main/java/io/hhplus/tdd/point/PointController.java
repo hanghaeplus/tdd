@@ -20,6 +20,7 @@ public class PointController {
     private final UserPointFindService userPointFindService;
     @Qualifier("lockedUserPointChargeService")
     private final UserPointChargeService userPointChargeService;
+    @Qualifier("lockedUserPointSpendService")
     private final UserPointSpendService userPointSpendService;
     private final PointHistoryService pointHistoryService;
 
